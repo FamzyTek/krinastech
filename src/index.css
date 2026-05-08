@@ -1,12 +1,58 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Segoe UI', Arial, sans-serif; background: #0A0A0A; color: #F5F0E8; }
-
-/* Mobile scrollable tables */
-.table-scroll {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #0A0A0A;
+  color: #F5F0E8;
+  overflow-x: hidden;
+}
+
+/* Make all table containers scrollable on mobile */
 table {
-  min-width: 600px;
+  min-width: 550px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+/* Mobile responsive fixes */
+@media (max-width: 768px) {
+  /* Stack POS layout on mobile */
+  .pos-wrap {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Make metrics scroll horizontally */
+  .metrics-row {
+    display: flex !important;
+    overflow-x: auto !important;
+    gap: 10px !important;
+    padding-bottom: 8px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .metrics-row > div {
+    min-width: 140px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Full width content */
+  .content {
+    padding: 10px !important;
+  }
+
+  /* Nav scrollable */
+  .nav {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
 }
