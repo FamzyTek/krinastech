@@ -28,11 +28,7 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
   const todaySales = sales.filter(s => s.date === today)
   const todayRev = todaySales.reduce((a, s) => a + s.total, 0)
 
-  function StockBadge({ qty }) {
-    if (qty === 0) return <span style={{ background:'#2A0A0A', color:'#E07070', border:'1px solid #4A1A1A', padding:'2px 8px', borderRadius:20, fontSize:11 }}>Out</span>
-    if (qty <= 3) return <span style={{ background:'#2A1A00', color:'#D4A040', border:'1px solid #4A3000', padding:'2px 8px', borderRadius:20, fontSize:11 }}>Low</span>
-    return <span style={{ background:'#0A2A0A', color:'#6DBF6D', border:'1px solid #1A4A1A', padding:'2px 8px', borderRadius:20, fontSize:11 }}>Good</span>
-  }
+  
 
   function MetricCard({ label, value, sub, color }) {
     return (
