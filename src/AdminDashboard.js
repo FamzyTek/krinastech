@@ -87,7 +87,7 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
               <MetricCard label="Low/Out" value={lowCount} sub="Need restock" color="#E07070" />
             </div>
             <div style={{ fontSize:12, fontWeight:600, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:10 }}>Recent transactions</div>
-            <div style={{ background:k2, border:'1px solid #222', borderRadius:10, overflow:'hidden', marginBottom:14 }}>
+            <div style={{ background:k2, border:'1px solid #222', borderRadius:10, overflowX:'auto', marginBottom:14 }}>
               <table style={{ width:'100%', borderCollapse:'collapse', fontSize:13 }}>
                 <thead><tr style={{ background:k3 }}>
                   {['Items','Staff','Total','Profit','Date','Actions'].map(h => (
@@ -99,7 +99,7 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
                     const items = s.items.map(i => i.name + (i.qty > 1 ? ' x' + i.qty : '')).join(', ')
                     return (
                       <tr key={s.id} style={{ borderBottom:'1px solid #1A1A1A' }}>
-                        <td style={{ padding:'9px 12px', color:w, maxWidth:180, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }} title={items}>{items}</td>
+                        <td style={{ padding:'9px 12px', color:w, maxWidth:180, overflowX:'auto', textOverflow:'ellipsis', whiteSpace:'nowrap' }} title={items}>{items}</td>
                         <td style={{ padding:'9px 12px', color:w }}>{s.staff}</td>
                         <td style={{ padding:'9px 12px', color:w }}>{fmt(s.total)}</td>
                         <td style={{ padding:'9px 12px', color:gold, fontWeight:600 }}>{fmt(s.profit)}</td>
@@ -240,7 +240,7 @@ function AddProductForm({ onAdd, products, onEdit, onDelete, onRestock }) {
         <button onClick={handleAdd} style={{ padding:'8px 18px', background:'#C9A84C', color:'#0A0A0A', border:'none', borderRadius:8, fontSize:12, fontWeight:700, cursor:'pointer', textTransform:'uppercase' }}>+ Add Product</button>
       </div>
       <div style={{ fontSize:12, fontWeight:600, color:'#C9A84C', letterSpacing:2, textTransform:'uppercase', marginBottom:10 }}>All inventory</div>
-      <div style={{ background:'#141414', border:'1px solid #222', borderRadius:10, overflow:'hidden' }}>
+      <div style={{ background:'#141414', border:'1px solid #222', borderRadius:10, overflowX:'auto' }}>
         <table style={{ width:'100%', borderCollapse:'collapse', fontSize:13 }}>
           <thead><tr style={{ background:'#1C1C1C' }}>
             {['Product','Category','Cost','Sell','Qty','Status','Actions'].map(h => <th key={h} style={{ textAlign:'left', padding:'9px 12px', fontSize:11, fontWeight:600, color:'#8A8070', borderBottom:'1px solid #222', letterSpacing:1, textTransform:'uppercase' }}>{h}</th>)}
@@ -282,7 +282,7 @@ function SalesPage({ sales, onEdit, onDelete }) {
   return (
     <div>
       <div style={{ fontSize:12, fontWeight:600, color:'#C9A84C', letterSpacing:2, textTransform:'uppercase', marginBottom:10 }}>Sales by staff</div>
-      <div style={{ background:'#141414', border:'1px solid #222', borderRadius:10, overflow:'hidden', marginBottom:14 }}>
+      <div style={{ background:'#141414', border:'1px solid #222', borderRadius:10, overflowX:'auto', marginBottom:14 }}>
         <table style={{ width:'100%', borderCollapse:'collapse', fontSize:13 }}>
           <thead><tr style={{ background:'#1C1C1C' }}>
             {['Staff','Transactions','Revenue','Profit'].map(h => <th key={h} style={{ textAlign:'left', padding:'9px 12px', fontSize:11, color:'#8A8070', borderBottom:'1px solid #222', letterSpacing:1, textTransform:'uppercase' }}>{h}</th>)}
@@ -300,7 +300,7 @@ function SalesPage({ sales, onEdit, onDelete }) {
         </table>
       </div>
       <div style={{ fontSize:12, fontWeight:600, color:'#C9A84C', letterSpacing:2, textTransform:'uppercase', marginBottom:10 }}>All transactions</div>
-      <div style={{ background:'#141414', border:'1px solid #222', borderRadius:10, overflow:'hidden' }}>
+      <div style={{ background:'#141414', border:'1px solid #222', borderRadius:10, overflowX:'auto' }}>
         <table style={{ width:'100%', borderCollapse:'collapse', fontSize:13 }}>
           <thead><tr style={{ background:'#1C1C1C' }}>
             {['Items','Staff','Total','Profit','Date','Actions'].map(h => <th key={h} style={{ textAlign:'left', padding:'9px 12px', fontSize:11, color:'#8A8070', borderBottom:'1px solid #222', letterSpacing:1, textTransform:'uppercase' }}>{h}</th>)}
@@ -310,7 +310,7 @@ function SalesPage({ sales, onEdit, onDelete }) {
               const items = s.items.map(i => i.name + (i.qty > 1 ? ' x' + i.qty : '')).join(', ')
               return (
                 <tr key={s.id} style={{ borderBottom:'1px solid #1A1A1A' }}>
-                  <td style={{ padding:'9px 12px', color:'#F5F0E8', maxWidth:200, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }} title={items}>{items}</td>
+                  <td style={{ padding:'9px 12px', color:'#F5F0E8', maxWidth:200, overflowX:'auto', textOverflow:'ellipsis', whiteSpace:'nowrap' }} title={items}>{items}</td>
                   <td style={{ padding:'9px 12px', color:'#EDE8DC' }}>{s.staff}</td>
                   <td style={{ padding:'9px 12px', color:'#EDE8DC' }}>{fmt(s.total)}</td>
                   <td style={{ padding:'9px 12px', color:'#C9A84C', fontWeight:600 }}>{fmt(s.profit)}</td>
@@ -352,7 +352,7 @@ function ProfitPage({ sales }) {
         ))}
       </div>
       <div style={{ fontSize:12, fontWeight:600, color:'#C9A84C', letterSpacing:2, textTransform:'uppercase', marginBottom:10 }}>Profit by product</div>
-      <div style={{ background:'#141414', border:'1px solid #222', borderRadius:10, overflow:'hidden' }}>
+      <div style={{ background:'#141414', border:'1px solid #222', borderRadius:10, overflowX:'auto' }}>
         <table style={{ width:'100%', borderCollapse:'collapse', fontSize:13 }}>
           <thead><tr style={{ background:'#1C1C1C' }}>
             {['Product','Units Sold','Revenue','Est. Profit','Margin'].map(h => <th key={h} style={{ textAlign:'left', padding:'9px 12px', fontSize:11, color:'#8A8070', borderBottom:'1px solid #222', letterSpacing:1, textTransform:'uppercase' }}>{h}</th>)}
