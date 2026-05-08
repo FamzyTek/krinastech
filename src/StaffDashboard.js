@@ -12,6 +12,7 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
   const today = new Date().toISOString().split('T')[0]
   const firstName = currentUser.split(' ')[0]
   const mySales = sales.filter(s => s.staff === firstName)
+  const isMobile = window.innerWidth < 768
 
   const nav = [
     { id:'pos', label:'Sell' },
@@ -51,7 +52,6 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
   }
 
   const cartTotal = cart.reduce((a, c) => a + c.sell * c.qty, 0)
-  const isMobile = window.innerWidth < 768
 
   if (receipt) return (
     <div style={{ minHeight:'100vh', background:'#0A0A0A', display:'flex', alignItems:'center', justifyContent:'center', padding:20 }}>
@@ -108,7 +108,6 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
             </div>
 
             {isMobile ? (
-              // MOBILE LAYOUT — stacked
               <div>
                 <input placeholder="Search product..." style={{ width:'100%', padding:'10px 14px', background:k2, border:'1px solid #333', borderRadius:10, color:w, fontSize:14, outline:'none', marginBottom:12 }} />
                 <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(140px,1fr))', gap:10, marginBottom:16 }}>
@@ -126,8 +125,6 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
                     </div>
                   ))}
                 </div>
-
-                {/* Mobile Cart */}
                 <div style={{ background:k2, border:'1px solid #222', borderRadius:10, overflow:'hidden' }}>
                   <div style={{ padding:'12px 14px', borderBottom:'1px solid #222' }}>
                     <div style={{ fontSize:13, fontWeight:600, color:gold, letterSpacing:2, textTransform:'uppercase' }}>🛒 Current Sale</div>
@@ -162,7 +159,6 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
                 </div>
               </div>
             ) : (
-              // DESKTOP LAYOUT — side by side
               <div style={{ display:'grid', gridTemplateColumns:'1fr 280px', gap:14, minHeight:480 }}>
                 <div>
                   <input placeholder="Search product..." style={{ width:'100%', padding:'10px 14px', background:k2, border:'1px solid #333', borderRadius:10, color:w, fontSize:14, outline:'none', marginBottom:12 }} />
@@ -238,7 +234,9 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
             <div style={{ background:k2, border:'1px solid #222', borderRadius:10, overflowX:'auto', WebkitOverflowScrolling:'touch' }}>
               <table style={{ width:'100%', borderCollapse:'collapse', fontSize:13, minWidth:400 }}>
                 <thead><tr style={{ background:k3 }}>
-                  {['Items','Total','Qty','Date'].map(h => <th key={h} style={{ textAlign:'left', padding:'9px 12px', fontSize:11, color:mu, borderBottom:'1px solid #222', letterSpacing:1, textTransform:'uppercase', whiteSpace:'nowrap' }}>{h}</th>)}
+                  {['Items','Total','Qty','Date'].map(h => (
+                    <th key={h} style={{ textAlign:'left', padding:'9px 12px', fontSize:11, color:mu, borderBottom:'1px solid #222', letterSpacing:1, textTransform:'uppercase', whiteSpace:'nowrap' }}>{h}</th>
+                  ))}
                 </tr></thead>
                 <tbody>
                   {mySales.length === 0
@@ -248,7 +246,7 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
                       const qty = s.items.reduce((a, i) => a + i.qty, 0)
                       return (
                         <tr key={s.id} style={{ borderBottom:'1px solid #1A1A1A' }}>
-                          <td style={{ padding:'9px 12px', color:w, whiteSpace:'nowrap', maxWidth:200, overflow:'hidden', textOverflow:'ellipsis' }} title={items}>{items}</td>
+                          <td style={{ padding:'9px 12px', color:w, whiteSpace:'nowrap', maxWidth:180, overflow:'hidden', textOverflow:'ellipsis' }} title={items}>{items}</td>
                           <td style={{ padding:'9px 12px', color:w, whiteSpace:'nowrap' }}>{fmt(s.total)}</td>
                           <td style={{ padding:'9px 12px', color:w, whiteSpace:'nowrap' }}>{qty}</td>
                           <td style={{ padding:'9px 12px', color:w, whiteSpace:'nowrap' }}>{s.date}</td>
@@ -281,6 +279,7 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
             </div>
           </div>
         )}
+
       </div>
     </div>
   )
