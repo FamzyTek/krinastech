@@ -80,6 +80,18 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
         {!editSale && !confirmDel && !editProd && page === 'staff' && <StaffPage staffList={staffList} onAdd={onAddStaff} onRemove={id => { if(window.confirm('Remove?')) onRemoveStaff(id) }} mobile={mobile} />}
       </div>
 
+            {/* DESKTOP TOP NAV */}
+      {!mobile && (
+        <div style={{ display:'flex', gap:2, padding:'0 18px', background:k3, borderBottom:'1px solid #222', flexShrink:0 }}>
+          {nav.map(n => (
+            <button key={n.id} onClick={() => { setPage(n.id); resetModals() }}
+              style={{ padding:'10px 20px', fontSize:13, border:'none', background:'transparent', cursor:'pointer', color: page === n.id ? gold : w, fontWeight: page === n.id ? 700 : 400, borderBottom: page === n.id ? '2px solid #C9A84C' : '2px solid transparent', whiteSpace:'nowrap' }}>
+              {n.icon} {n.label}
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* MOBILE BOTTOM NAV */}
       {mobile && (
         <div style={{ position:'fixed', bottom:0, left:0, right:0, background:k2, borderTop:'1px solid #2A2A2A', display:'flex', zIndex:100 }}>
