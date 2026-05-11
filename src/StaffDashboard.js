@@ -9,7 +9,7 @@ const w = '#F5F0E8'
 
 export default function StaffDashboard({ currentUser, products, sales, page, setPage, cart, setCart, onRecordSale, onLogout }) {
   const [receipt, setReceipt] = useState(null)
-  // mobile detection removed
+  const [mobile, setMobile] = useState(window.innerWidth < 768)
   const today = new Date().toISOString().split('T')[0]
   const firstName = currentUser.split(' ')[0]
   const mySales = sales.filter(s => s.staff === firstName)
@@ -62,10 +62,10 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
 
   if(receipt) return (
     <div style={{ minHeight:'100vh', background:'#0A0A0A', display:'flex', alignItems:'center', justifyContent:'center', padding:16 }}>
-      <div style={{ background:k2, border:`1px solid ${gold}`, borderRadius:14, padding:24, width:'100%', maxWidth:320 }}>
-        <div style={{ textAlign:'center', fontSize:44, marginBottom:8 }}>✅</div>
+      <div style={{ background:k2, border:'1px solid #C9A84C', borderRadius:14, padding:24, width:'100%', maxWidth:320 }}>
+        <div style={{ textAlign:'center', fontSize:44, marginBottom:8 }}>OK</div>
         <div style={{ fontSize:16, fontWeight:700, color:gold, textAlign:'center', marginBottom:4 }}>Sale Complete!</div>
-        <div style={{ fontSize:12, color:mu, textAlign:'center', marginBottom:16 }}>{receipt.date} — {firstName}</div>
+        <div style={{ fontSize:12, color:mu, textAlign:'center', marginBottom:16 }}>{receipt.date} -- {firstName}</div>
         {receipt.items.map((it,i) => (
           <div key={i} style={{ display:'flex', justifyContent:'space-between', fontSize:13, padding:'5px 0', borderBottom:'1px solid #1A1A1A', color:w }}>
             <span>{it.name}{it.qty>1?' x'+it.qty:''}</span>
@@ -86,7 +86,6 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
   return (
     <div style={{ minHeight:'100vh', background:'#0A0A0A', display:'flex', flexDirection:'column' }}>
 
-      {/* TOPBAR */}
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 16px', height:52, background:k2, borderBottom:'1px solid #222', flexShrink:0, position:'sticky', top:0, zIndex:200 }}>
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
           <img src="/icon-512.png" alt="logo" onError={e=>e.target.style.display='none'} style={{ width:28, height:28, borderRadius:6, objectFit:'contain' }} />
@@ -99,10 +98,8 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
         </div>
       </div>
 
-      {/* CONTENT */}
       <div style={{ flex:1, overflowY:'auto', overflowX:'hidden', padding:'12px 12px 80px', WebkitOverflowScrolling:'touch' }}>
 
-        {/* POS PAGE */}
         {page === 'pos' && (
           <div>
             <div style={{ marginBottom:12 }}>
@@ -110,25 +107,22 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
               <div style={{ fontSize:12, color:mu, marginTop:2 }}>Tap a product to add to cart</div>
             </div>
 
-            {/* Cart summary bar */}
             {cart.length > 0 && (
-              <div style={{ background:k2, border:`1px solid ${gold}`, borderRadius:10, padding:'10px 14px', marginBottom:12, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+              <div style={{ background:k2, border:'1px solid #C9A84C', borderRadius:10, padding:'10px 14px', marginBottom:12, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                 <span style={{ fontSize:13, color:mu }}>{cartCount} item(s) in cart</span>
                 <span style={{ fontSize:16, fontWeight:700, color:gold }}>{fmt(cartTotal)}</span>
               </div>
             )}
 
-            {/* Product grid */}
             <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:10, marginBottom:16 }}>
               {products.map(p => (
                 <div key={p.id} onClick={() => addToCart(p)}
-                  style={{ background:k2, border: cart.find(c=>c.id===p.id) ? `1.5px solid ${gold}` : '1px solid #2A2A2A', borderRadius:12, padding:14, cursor:p.qty===0?'not-allowed':'pointer', opacity:p.qty===0?0.4:1, position:'relative' }}>
+                  style={{ background:k2, border: cart.find(c=>c.id===p.id) ? '1.5px solid #C9A84C' : '1px solid #2A2A2A', borderRadius:12, padding:14, cursor:p.qty===0?'not-allowed':'pointer', opacity:p.qty===0?0.4:1, position:'relative' }}>
                   {cart.find(c=>c.id===p.id) && (
                     <div style={{ position:'absolute', top:8, right:8, width:20, height:20, borderRadius:'50%', background:gold, color:'#0A0A0A', fontSize:11, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center' }}>
                       {cart.find(c=>c.id===p.id).qty}
                     </div>
                   )}
-                  <div style={{ fontSize:24, marginBottom:6 }}>📱</div>
                   <div style={{ fontSize:13, fontWeight:700, color:w, marginBottom:4, lineHeight:1.3 }}>{p.name}</div>
                   <div style={{ fontSize:14, fontWeight:700, color:gold }}>{fmt(p.sell)}</div>
                   <div style={{ fontSize:11, marginTop:4, color:p.qty===0?'#E07070':p.qty<=3?'#D4A040':'#6DBF6D' }}>
@@ -138,7 +132,6 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
               ))}
             </div>
 
-            {/* Cart section */}
             {cart.length > 0 && (
               <div style={{ background:k2, border:'1px solid #222', borderRadius:12, overflow:'hidden', marginBottom:12 }}>
                 <div style={{ padding:'12px 14px', borderBottom:'1px solid #222', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
@@ -153,12 +146,12 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
                         <br/><span style={{ fontSize:11, color:mu }}>{fmt(item.sell)} each</span>
                       </div>
                       <div style={{ display:'flex', alignItems:'center', gap:6 }}>
-                        <button onClick={() => changeQty(item.id,-1)} style={{ width:28, height:28, background:k3, border:'1px solid #333', borderRadius:8, color:w, fontSize:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}>-</button>
+                        <button onClick={() => changeQty(item.id,-1)} style={{ width:28, height:28, background:k3, border:'1px solid #333', borderRadius:8, color:w, fontSize:16, cursor:'pointer' }}>-</button>
                         <span style={{ fontSize:14, fontWeight:700, color:w, minWidth:20, textAlign:'center' }}>{item.qty}</span>
-                        <button onClick={() => changeQty(item.id,1)} style={{ width:28, height:28, background:k3, border:'1px solid #333', borderRadius:8, color:w, fontSize:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}>+</button>
+                        <button onClick={() => changeQty(item.id,1)} style={{ width:28, height:28, background:k3, border:'1px solid #333', borderRadius:8, color:w, fontSize:16, cursor:'pointer' }}>+</button>
                       </div>
-                      <div style={{ fontSize:13, color:gold, fontWeight:600, minWidth:80, textAlign:'right' }}>{fmt(item.sell*item.qty)}</div>
-                      <span onClick={() => setCart(cart.filter(c=>c.id!==item.id))} style={{ color:'#E07070', cursor:'pointer', fontSize:18, marginLeft:4 }}>x</span>
+                      <div style={{ fontSize:13, color:gold, fontWeight:600 }}>{fmt(item.sell*item.qty)}</div>
+                      <span onClick={() => setCart(cart.filter(c=>c.id!==item.id))} style={{ color:'#E07070', cursor:'pointer', fontSize:18 }}>x</span>
                     </div>
                   ))}
                 </div>
@@ -176,7 +169,6 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
           </div>
         )}
 
-        {/* MY HISTORY */}
         {page === 'myhistory' && (
           <div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:10, marginBottom:16 }}>
@@ -193,7 +185,7 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
               ))}
             </div>
             <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>My sales history</div>
-            <div style={{ background:k2, border:'1px solid #333', borderRadius:12, overflowX:'auto', WebkitOverflowScrolling:'touch' }}>
+            <div style={{ background:k2, border:'1px solid #333', borderRadius:12, overflowX:'auto' }}>
               <table style={{ width:'100%', borderCollapse:'collapse', fontSize:13, minWidth:300 }}>
                 <thead><tr style={{ background:k3 }}>
                   {['Items','Total','Date'].map(h=><th key={h} style={{ textAlign:'left', padding:'12px 14px', fontSize:12, color:gold, borderBottom:'1px solid #333', whiteSpace:'nowrap', fontWeight:700 }}>{h}</th>)}
@@ -218,14 +210,12 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
           </div>
         )}
 
-        {/* STOCK VIEW */}
         {page === 'stockview' && (
           <div>
             <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>Available stock</div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:10 }}>
               {products.map(p => (
                 <div key={p.id} style={{ background:k2, border:'1px solid #2A2A2A', borderRadius:12, padding:14, opacity:p.qty===0?0.4:1 }}>
-                  <div style={{ fontSize:24, marginBottom:6 }}>📱</div>
                   <div style={{ fontSize:13, fontWeight:700, color:w, marginBottom:4 }}>{p.name}</div>
                   <div style={{ fontSize:14, fontWeight:700, color:gold }}>{fmt(p.sell)}</div>
                   <div style={{ fontSize:11, marginTop:4, color:p.qty===0?'#E07070':p.qty<=3?'#D4A040':'#6DBF6D' }}>
@@ -239,7 +229,6 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
 
       </div>
 
-      {/* BOTTOM NAV */}
       <div style={{ position:'fixed', bottom:0, left:0, right:0, background:k2, borderTop:'1px solid #2A2A2A', display:'flex', zIndex:100 }}>
         {nav.map(n => (
           <button key={n.id} onClick={() => setPage(n.id)}
