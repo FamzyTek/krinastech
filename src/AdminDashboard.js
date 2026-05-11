@@ -28,11 +28,11 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
   const todayRev = todaySales.reduce((a, s) => a + s.total, 0)
 
   const nav = [
-    { id:'overview', icon:'🏠', label:'Home' },
-    { id:'stock', icon:'📦', label:'Stock' },
-    { id:'sales', icon:'🧾', label:'Sales' },
-    { id:'profit', icon:'💰', label:'Profit' },
-    { id:'staff', icon:'👥', label:'Staff' },
+    { id:'overview', icon:'\uD83C\uDFE0', label:'Home' },
+    { id:'stock', icon:'\uD83D\uDCE6', label:'Stock' },
+    { id:'sales', icon:'\uD83E\uDDFE', label:'Sales' },
+    { id:'profit', icon:'\uD83D\uDCB0', label:'Profit' },
+    { id:'staff', icon:'\uD83D\uDC65', label:'Staff' },
   ]
 
   function resetModals() { setEditSale(null); setEditProd(null); setConfirmDel(null) }
@@ -40,7 +40,6 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
   return (
     <div style={{ minHeight:'100vh', background:'#0A0A0A', display:'flex', flexDirection:'column' }}>
 
-      {/* TOPBAR */}
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 18px', height:52, background:k2, borderBottom:'1px solid #222', flexShrink:0, position:'sticky', top:0, zIndex:200 }}>
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
           <img src="/icon-512.png" alt="logo" onError={e=>e.target.style.display='none'} style={{ width:28, height:28, borderRadius:6, objectFit:'contain' }} />
@@ -49,30 +48,25 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
           <span style={{ fontSize:11, padding:'3px 10px', borderRadius:20, background:'#2A1F00', color:gold, border:'1px solid #A07830', fontWeight:600 }}>Admin</span>
           {!mobile && <span style={{ fontSize:13, color:w }}>{currentUser}</span>}
-          <button onClick={onLogout} style={{ fontSize:12, padding:'6px 12px', background:'transparent', border:'1px solid #333', borderRadius:6, color:w, cursor:'pointer' }}>
-            Logout
-          </button>
+          <button onClick={onLogout} style={{ fontSize:12, padding:'6px 12px', background:'transparent', border:'1px solid #333', borderRadius:6, color:w, cursor:'pointer' }}>Logout</button>
         </div>
       </div>
 
-      {/* DESKTOP TOP NAV */}
       {!mobile && (
         <div style={{ display:'flex', gap:2, padding:'0 18px', background:k3, borderBottom:'1px solid #222', flexShrink:0, position:'sticky', top:52, zIndex:100 }}>
           {nav.map(n => (
             <button key={n.id} onClick={() => { setPage(n.id); resetModals() }}
-              
+              style={{ padding:'12px 20px', fontSize:13, border:'none', background:'transparent', cursor:'pointer', color: page === n.id ? gold : w, fontWeight: page === n.id ? 700 : 400, borderBottom: page === n.id ? '2px solid #C9A84C' : '2px solid transparent', whiteSpace:'nowrap' }}>
+              {n.icon} {n.label}
             </button>
           ))}
         </div>
       )}
 
-      {/* CONTENT */}
       <div style={{ flex:1, overflowY:'auto', overflowX:'hidden', padding: mobile ? '12px 12px 80px' : '20px', WebkitOverflowScrolling:'touch' }}>
-
         {editSale && <EditSaleModal sale={editSale} onSave={updates => { onUpdateSale(editSale.id, updates); resetModals(); setPage('sales') }} onCancel={resetModals} />}
         {confirmDel && <ConfirmDeleteModal sale={confirmDel} onConfirm={() => { onDeleteSale(confirmDel.id); resetModals() }} onCancel={resetModals} />}
         {editProd && <EditProductModal product={editProd} onSave={updates => { onUpdateProduct(editProd.id, updates); resetModals(); setPage('stock') }} onCancel={resetModals} />}
-
         {!editSale && !confirmDel && !editProd && page === 'overview' && <OverviewPage products={products} sales={sales} totalStock={totalStock} totalRev={totalRev} totalProfit={totalProfit} lowCount={lowCount} todayRev={todayRev} todaySales={todaySales} onEditSale={setEditSale} onDeleteSale={setConfirmDel} mobile={mobile} />}
         {!editSale && !confirmDel && !editProd && page === 'stock' && <AddProductForm onAdd={onAddProduct} products={products} onEdit={setEditProd} onDelete={id => { if(window.confirm('Delete?')) onDeleteProduct(id) }} onRestock={(id, qty) => onUpdateProduct(id, { qty })} mobile={mobile} />}
         {!editSale && !confirmDel && !editProd && page === 'sales' && <SalesPage sales={sales} onEdit={setEditSale} onDelete={setConfirmDel} mobile={mobile} />}
@@ -80,31 +74,18 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
         {!editSale && !confirmDel && !editProd && page === 'staff' && <StaffPage staffList={staffList} onAdd={onAddStaff} onRemove={id => { if(window.confirm('Remove?')) onRemoveStaff(id) }} mobile={mobile} />}
       </div>
 
-            {/* DESKTOP TOP NAV */}
-      {!mobile && (
-        <div style={{ display:'flex', gap:2, padding:'0 18px', background:k3, borderBottom:'1px solid #222', flexShrink:0 }}>
-          {nav.map(n => (
-            <button key={n.id} onClick={() => { setPage(n.id); resetModals() }}
-              style={{ padding:'10px 20px', fontSize:13, border:'none', background:'transparent', cursor:'pointer', color: page === n.id ? gold : w, fontWeight: page === n.id ? 700 : 400, borderBottom: page === n.id ? '2px solid #C9A84C' : '2px solid transparent', whiteSpace:'nowrap' }}>
-              {n.icon} {n.label}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* MOBILE BOTTOM NAV */}
       {mobile && (
         <div style={{ position:'fixed', bottom:0, left:0, right:0, background:k2, borderTop:'1px solid #2A2A2A', display:'flex', zIndex:100 }}>
           {nav.map(n => (
             <button key={n.id} onClick={() => { setPage(n.id); resetModals() }}
               style={{ flex:1, padding:'8px 4px 10px', background:'transparent', border:'none', cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:3 }}>
-              <span style={{ fontSize:11, color: page === n.id ? gold : mu, fontWeight: page === n.id ? 700 : 400 }}>{n.icon} {n.label}</span>
+              <span style={{ fontSize:20 }}>{n.icon}</span>
+              <span style={{ fontSize:10, color: page === n.id ? gold : mu, fontWeight: page === n.id ? 700 : 400 }}>{n.label}</span>
               {page === n.id && <div style={{ width:4, height:4, borderRadius:'50%', background:gold }}></div>}
             </button>
           ))}
         </div>
       )}
-
     </div>
   )
 }
@@ -125,7 +106,6 @@ function OverviewPage({ products, sales, totalStock, totalRev, totalProfit, lowC
           </div>
         ))}
       </div>
-
       <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>Recent transactions</div>
       <div style={{ background:k2, border:'1px solid #333', borderRadius:12, overflowX:'auto', marginBottom:20, WebkitOverflowScrolling:'touch' }}>
         <table style={{ width:'100%', borderCollapse:'collapse', fontSize:14, minWidth:500 }}>
@@ -155,7 +135,6 @@ function OverviewPage({ products, sales, totalStock, totalRev, totalProfit, lowC
           </tbody>
         </table>
       </div>
-
       <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>Stock alerts</div>
       {products.filter(p=>p.qty<=3).length===0
         ?<div style={{ background:'#0A2A0A', border:'1px solid #1A4A1A', color:'#6DBF6D', padding:'12px 16px', borderRadius:10, fontSize:14, fontWeight:600 }}>All products well stocked</div>
@@ -179,11 +158,11 @@ function EditSaleModal({ sale, onSave, onCancel }) {
   return (
     <div style={{ background:'rgba(0,0,0,0.9)', position:'fixed', top:0, left:0, right:0, bottom:0, display:'flex', alignItems:'center', justifyContent:'center', padding:16, zIndex:300 }}>
       <div style={{ background:k2, border:'1px solid #C9A84C', borderRadius:14, padding:24, width:'100%', maxWidth:420 }}>
-        <div style={{ fontSize:16, fontWeight:700, color:gold, marginBottom:16 }}>Edit Sale Entry</div>
+        <div style={{ fontSize:16, fontWeight:700, color:gold, marginBottom:16 }}>Edit Sale</div>
         <div style={{ background:k3, borderRadius:8, padding:'10px 14px', marginBottom:16, fontSize:13, color:w, fontWeight:600 }}>{items}</div>
         <label style={{ fontSize:12, color:mu, display:'block', marginBottom:5, fontWeight:600 }}>Staff name</label>
         <input style={inp} value={staff} onChange={e=>setStaff(e.target.value)} />
-        <label style={{ fontSize:12, color:mu, display:'block', marginBottom:5, fontWeight:600 }}>Total revenue</label>
+        <label style={{ fontSize:12, color:mu, display:'block', marginBottom:5, fontWeight:600 }}>Total</label>
         <input type="number" style={inp} value={total} onChange={e=>setTotal(e.target.value)} />
         <label style={{ fontSize:12, color:mu, display:'block', marginBottom:5, fontWeight:600 }}>Profit</label>
         <input type="number" style={inp} value={profit} onChange={e=>setProfit(e.target.value)} />
@@ -191,7 +170,7 @@ function EditSaleModal({ sale, onSave, onCancel }) {
         <input type="date" style={inp} value={date} onChange={e=>setDate(e.target.value)} />
         <div style={{ display:'flex', gap:10 }}>
           <button onClick={onCancel} style={{ flex:1, padding:12, background:'transparent', border:'1px solid #333', borderRadius:8, color:w, cursor:'pointer', fontSize:14 }}>Cancel</button>
-          <button onClick={()=>onSave({staff,total:parseFloat(total),profit:parseFloat(profit),date})} style={{ flex:1, padding:12, background:gold, color:'#0A0A0A', border:'none', borderRadius:8, fontWeight:700, cursor:'pointer', fontSize:14 }}>Save Changes</button>
+          <button onClick={()=>onSave({staff,total:parseFloat(total),profit:parseFloat(profit),date})} style={{ flex:1, padding:12, background:gold, color:'#0A0A0A', border:'none', borderRadius:8, fontWeight:700, cursor:'pointer', fontSize:14 }}>Save</button>
         </div>
       </div>
     </div>
@@ -205,10 +184,10 @@ function ConfirmDeleteModal({ sale, onConfirm, onCancel }) {
       <div style={{ background:k2, border:'1px solid #C9A84C', borderRadius:14, padding:24, width:'100%', maxWidth:400 }}>
         <div style={{ fontSize:16, fontWeight:700, color:'#E07070', marginBottom:16 }}>Confirm Delete</div>
         <div style={{ background:k3, borderRadius:8, padding:'12px 14px', marginBottom:14, fontSize:14, color:w, fontWeight:600 }}>{items}</div>
-        <div style={{ fontSize:13, color:'#E07070', marginBottom:18, fontWeight:600 }}>This action cannot be undone.</div>
+        <div style={{ fontSize:13, color:'#E07070', marginBottom:18, fontWeight:600 }}>This cannot be undone.</div>
         <div style={{ display:'flex', gap:10 }}>
           <button onClick={onCancel} style={{ flex:1, padding:12, background:'transparent', border:'1px solid #333', borderRadius:8, color:w, cursor:'pointer', fontSize:14 }}>Cancel</button>
-          <button onClick={onConfirm} style={{ flex:1, padding:12, background:'#8B2E2E', color:w, border:'none', borderRadius:8, fontWeight:700, cursor:'pointer', fontSize:14 }}>Yes, Delete</button>
+          <button onClick={onConfirm} style={{ flex:1, padding:12, background:'#8B2E2E', color:w, border:'none', borderRadius:8, fontWeight:700, cursor:'pointer', fontSize:14 }}>Delete</button>
         </div>
       </div>
     </div>
@@ -234,7 +213,7 @@ function EditProductModal({ product, onSave, onCancel }) {
         ))}
         <div style={{ display:'flex', gap:10 }}>
           <button onClick={onCancel} style={{ flex:1, padding:12, background:'transparent', border:'1px solid #333', borderRadius:8, color:w, cursor:'pointer', fontSize:14 }}>Cancel</button>
-          <button onClick={()=>onSave({name,category:cat,cost:parseFloat(cost),sell:parseFloat(sell),qty:parseInt(qty)})} style={{ flex:1, padding:12, background:gold, color:'#0A0A0A', border:'none', borderRadius:8, fontWeight:700, cursor:'pointer', fontSize:14 }}>Save Changes</button>
+          <button onClick={()=>onSave({name,category:cat,cost:parseFloat(cost),sell:parseFloat(sell),qty:parseInt(qty)})} style={{ flex:1, padding:12, background:gold, color:'#0A0A0A', border:'none', borderRadius:8, fontWeight:700, cursor:'pointer', fontSize:14 }}>Save</button>
         </div>
       </div>
     </div>
@@ -248,13 +227,11 @@ function AddProductForm({ onAdd, products, onEdit, onDelete, onRestock, mobile }
   const [sell,setSell]=useState('')
   const [qty,setQty]=useState('')
   const inp = { width:'100%', padding:'10px 12px', background:k3, border:'1px solid #444', borderRadius:8, color:w, fontSize:14, outline:'none' }
-
   function handleAdd(){
     if(!name||!cat||!cost||!sell||!qty)return alert('Fill all fields')
     onAdd({name,category:cat,cost:parseFloat(cost),sell:parseFloat(sell),qty:parseInt(qty)})
     setName('');setCat('');setCost('');setSell('');setQty('')
   }
-
   return(
     <div>
       <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>Add product</div>
@@ -266,7 +243,6 @@ function AddProductForm({ onAdd, products, onEdit, onDelete, onRestock, mobile }
         </div>
         <button onClick={handleAdd} style={{ padding:'10px 24px', background:gold, color:'#0A0A0A', border:'none', borderRadius:8, fontSize:14, fontWeight:700, cursor:'pointer' }}>+ Add Product</button>
       </div>
-
       <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>All inventory</div>
       <div style={{ background:k2, border:'1px solid #333', borderRadius:12, overflowX:'auto', WebkitOverflowScrolling:'touch' }}>
         <table style={{ width:'100%', borderCollapse:'collapse', fontSize:14, minWidth:600 }}>
@@ -276,11 +252,11 @@ function AddProductForm({ onAdd, products, onEdit, onDelete, onRestock, mobile }
           <tbody>
             {products.map(p=>(
               <tr key={p.id} style={{ borderBottom:'1px solid #222' }}>
-                <td style={{ padding:'12px 16px', color:w, fontWeight:700, whiteSpace:'nowrap', fontSize:14 }}>{p.name}</td>
+                <td style={{ padding:'12px 16px', color:w, fontWeight:700, whiteSpace:'nowrap' }}>{p.name}</td>
                 <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', fontWeight:600 }}>{p.category}</td>
                 <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', fontWeight:600 }}>{fmt(p.cost)}</td>
                 <td style={{ padding:'12px 16px', color:gold, whiteSpace:'nowrap', fontWeight:700 }}>{fmt(p.sell)}</td>
-                <td style={{ padding:'12px 16px', color:w, fontWeight:700, whiteSpace:'nowrap', fontSize:15 }}>{p.qty}</td>
+                <td style={{ padding:'12px 16px', color:w, fontWeight:700, whiteSpace:'nowrap' }}>{p.qty}</td>
                 <td style={{ padding:'12px 16px', whiteSpace:'nowrap' }}>
                   {p.qty===0?<span style={{ background:'#2A0A0A', color:'#E07070', padding:'4px 10px', borderRadius:20, fontSize:12, fontWeight:700 }}>Out</span>
                     :p.qty<=3?<span style={{ background:'#2A1A00', color:'#D4A040', padding:'4px 10px', borderRadius:20, fontSize:12, fontWeight:700 }}>Low</span>
@@ -288,7 +264,7 @@ function AddProductForm({ onAdd, products, onEdit, onDelete, onRestock, mobile }
                 </td>
                 <td style={{ padding:'12px 16px', whiteSpace:'nowrap' }}>
                   <button onClick={()=>onEdit(p)} style={{ marginRight:6, padding:'6px 12px', background:'transparent', border:'1px solid #2A3A1A', borderRadius:6, color:'#D4A040', fontSize:12, cursor:'pointer', fontWeight:600 }}>Edit</button>
-                  <button onClick={()=>{const a=prompt('Add how many units?');if(a&&parseInt(a)>0)onRestock(p.id,p.qty+parseInt(a))}} style={{ marginRight:6, padding:'6px 12px', background:'transparent', border:'1px solid #444', borderRadius:6, color:w, fontSize:12, cursor:'pointer', fontWeight:600 }}>+Stock</button>
+                  <button onClick={()=>{const a=prompt('Add units?');if(a&&parseInt(a)>0)onRestock(p.id,p.qty+parseInt(a))}} style={{ marginRight:6, padding:'6px 12px', background:'transparent', border:'1px solid #444', borderRadius:6, color:w, fontSize:12, cursor:'pointer', fontWeight:600 }}>+Stock</button>
                   <button onClick={()=>onDelete(p.id)} style={{ padding:'6px 12px', background:'transparent', border:'1px solid #4A1A1A', borderRadius:6, color:'#E07070', fontSize:12, cursor:'pointer', fontWeight:600 }}>Del</button>
                 </td>
               </tr>
@@ -312,7 +288,7 @@ function SalesPage({ sales, onEdit, onDelete, mobile }) {
       <div style={{ background:k2, border:'1px solid #333', borderRadius:12, overflowX:'auto', WebkitOverflowScrolling:'touch', marginBottom:16 }}>
         <table style={{ width:'100%', borderCollapse:'collapse', fontSize:14, minWidth:400 }}>
           <thead><tr style={{ background:k3 }}>
-            {['Staff','Transactions','Revenue','Profit Generated'].map(h=><th key={h} style={{ textAlign:'left', padding:'12px 16px', fontSize:12, color:gold, borderBottom:'1px solid #333', whiteSpace:'nowrap', fontWeight:700 }}>{h}</th>)}
+            {['Staff','Transactions','Revenue','Profit'].map(h=><th key={h} style={{ textAlign:'left', padding:'12px 16px', fontSize:12, color:gold, borderBottom:'1px solid #333', whiteSpace:'nowrap', fontWeight:700 }}>{h}</th>)}
           </tr></thead>
           <tbody>
             {Object.entries(staffSum).map(([name,s])=>(
@@ -326,7 +302,6 @@ function SalesPage({ sales, onEdit, onDelete, mobile }) {
           </tbody>
         </table>
       </div>
-
       <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>All transactions</div>
       <div style={{ background:k2, border:'1px solid #333', borderRadius:12, overflowX:'auto', WebkitOverflowScrolling:'touch' }}>
         <table style={{ width:'100%', borderCollapse:'collapse', fontSize:14, minWidth:580 }}>
@@ -378,12 +353,11 @@ function ProfitPage({ sales, mobile }) {
           </div>
         ))}
       </div>
-
       <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>Profit by product</div>
       <div style={{ background:k2, border:'1px solid #333', borderRadius:12, overflowX:'auto', WebkitOverflowScrolling:'touch' }}>
         <table style={{ width:'100%', borderCollapse:'collapse', fontSize:14, minWidth:480 }}>
           <thead><tr style={{ background:k3 }}>
-            {['Product','Units Sold','Revenue','Est. Profit','Margin'].map(h=><th key={h} style={{ textAlign:'left', padding:'12px 16px', fontSize:12, color:gold, borderBottom:'1px solid #333', whiteSpace:'nowrap', fontWeight:700 }}>{h}</th>)}
+            {['Product','Units Sold','Revenue','Profit','Margin'].map(h=><th key={h} style={{ textAlign:'left', padding:'12px 16px', fontSize:12, color:gold, borderBottom:'1px solid #333', whiteSpace:'nowrap', fontWeight:700 }}>{h}</th>)}
           </tr></thead>
           <tbody>
             {Object.entries(pg).map(([name,r])=>{
@@ -422,7 +396,6 @@ function StaffPage({ staffList, onAdd, onRemove, mobile }) {
         </div>
         <button onClick={()=>{if(!name||!username||!password)return alert('Fill all fields');onAdd({name,username,password,role:'staff',active:true});setName('');setUsername('');setPassword('')}} style={{ padding:'10px 24px', background:gold, color:'#0A0A0A', border:'none', borderRadius:8, fontSize:14, fontWeight:700, cursor:'pointer' }}>+ Add Staff</button>
       </div>
-
       <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>Staff accounts</div>
       <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
         {staffList.filter(s=>s.role==='staff').map(s=>(
