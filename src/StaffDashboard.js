@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 
 const fmt = n => '\u20A6' + Number(Math.round(n)).toLocaleString()
 const gold = '#C9A84C'
@@ -15,7 +15,7 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
   const mySales = sales.filter(s => s.staff === firstName)
 
   useEffect(() => {
-    const handler = () => setMobile(window.innerWidth < 768)
+    const handler = () => {}
     window.addEventListener('resize', handler)
     return () => window.removeEventListener('resize', handler)
   }, [])
