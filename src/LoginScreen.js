@@ -5,8 +5,8 @@ export default function LoginScreen({ onLogin }) {
   const [password, setPassword] = useState('')
 
   return (
-    <div style={{ display:'flex', alignItems:'center', justifyContent:'center', minHeight:'100vh', background:'#0A0A0A' }}>
-      <div style={{ background:'#141414', border:'1px solid #2A2A2A', borderTop:'2px solid #C9A84C', borderRadius:12, padding:'2.5rem 2rem', width:340 }}>
+    <div style={{ display:'flex', alignItems:'center', justifyContent:'center', minHeight:'100vh', background:'#0A0A0A', padding:16 }}>
+  <div style={{ background:'#141414', border:'1px solid #2A2A2A', borderTop:'2px solid #C9A84C', borderRadius:12, padding:'2.5rem 2rem', width:'100%', maxWidth:380 }}>
         
         {/* LOGO */}
         <div style={{ textAlign:'center', marginBottom:'2rem' }}>
