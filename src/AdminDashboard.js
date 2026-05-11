@@ -6,7 +6,7 @@ const k2 = '#141414'
 const k3 = '#1C1C1C'
 const mu = '#8A8070'
 const w = '#F5F0E8'
-const isMobile = () => window.innerWidth < 768
+const isMobile = () => window.innerWidth < 1024
 
 export default function AdminDashboard({ currentUser, products, sales, staffList, page, setPage, onDeleteSale, onUpdateSale, onAddProduct, onUpdateProduct, onDeleteProduct, onAddStaff, onRemoveStaff, onLogout }) {
   const [editSale, setEditSale] = useState(null)
