@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 
 const fmt = n => '₦' + Number(Math.round(n)).toLocaleString()
 const gold = '#C9A84C'
@@ -86,7 +86,7 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
 
       {/* TOP NAV — desktop */}
       {!mobile && (
-        <div style={{ position:'fixed', top:50, left:0, right:0, display:'flex', gap:2, padding:'0 18px', background:k3, borderBottom:'1px solid #222', zIndex:50 }}>
+        <div style={{ position:'sticky', top:0, left:0, right:0, display:'flex', gap:2, padding:'0 18px', background:k3, borderBottom:'1px solid #222', zIndex:50 }}>
           {nav.map(n => (
             <button key={n.id} onClick={() => { setPage(n.id); resetModals() }}
               style={{ padding:'10px 16px', fontSize:12, border:'none', background:'transparent', cursor:'pointer', color: page === n.id ? gold : mu, fontWeight: page === n.id ? 700 : 400, borderBottom: page === n.id ? `2px solid ${gold}` : '2px solid transparent', whiteSpace:'nowrap' }}>
@@ -422,3 +422,4 @@ function StaffPage({ staffList, onAdd, onRemove, mobile }) {
     </div>
   )
 }
+
