@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 const fmt = n => '₦' + Number(Math.round(n)).toLocaleString()
 const gold = '#C9A84C'
