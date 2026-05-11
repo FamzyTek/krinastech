@@ -28,11 +28,11 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
   const todayRev = todaySales.reduce((a, s) => a + s.total, 0)
 
   const nav = [
-    { id:'overview', icon:'Home', label:'Home' },
-    { id:'stock', icon:'Stock', label:'Stock' },
-    { id:'sales', icon:'Sales', label:'Sales' },
-    { id:'profit', icon:'Profit', label:'Profit' },
-    { id:'staff', icon:'Staff', label:'Staff' },
+    { id:'overview', icon:'🏠', label:'Home' },
+    { id:'stock', icon:'📦', label:'Stock' },
+    { id:'sales', icon:'🧾', label:'Sales' },
+    { id:'profit', icon:'💰', label:'Profit' },
+    { id:'staff', icon:'👥', label:'Staff' },
   ]
 
   function resetModals() { setEditSale(null); setEditProd(null); setConfirmDel(null) }
