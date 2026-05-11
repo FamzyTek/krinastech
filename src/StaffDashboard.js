@@ -295,7 +295,7 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
       </div>
 
       {/* BOTTOM NAV */}
-      <div style={{ position:'fixed', bottom:0, left:0, right:0, background:k2, borderTop:'1px solid #2A2A2A', display:'flex', zIndex:100, paddingBottom:'env(safe-area-inset-bottom)' }}>
+      <div style={{ position:'fixed', bottom:0, left:0, right:0, background:k2, borderTop:'1px solid #2A2A2A', display:'flex', zIndex:100 }}>
         {nav.map(n=>(
           <button key={n.id} onClick={()=>setPage(n.id)}
             style={{ flex:1, padding:'8px 4px 10px', background:'transparent', border:'none', cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:3, position:'relative' }}>
