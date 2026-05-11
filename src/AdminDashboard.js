@@ -57,7 +57,7 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
       </div>
 
       {/* CONTENT */}
-      <div style={{ flex:1, overflowY:'auto', overflowX:'hidden', padding: mobile ? '12px 12px 80px' : '16px', WebkitOverflowScrolling:'touch' }}>
+      <div style={{ flex:1, overflowY:'auto', overflowX:'hidden', padding: mobile ? '12px 12px 80px' : '20px', WebkitOverflowScrolling:'touch' }}>
 
         {editSale && <EditSaleModal sale={editSale} onSave={updates => { onUpdateSale(editSale.id, updates); resetModals(); setPage('sales') }} onCancel={resetModals} />}
         {confirmDel && <ConfirmDeleteModal sale={confirmDel} onConfirm={() => { onDeleteSale(confirmDel.id); resetModals() }} onCancel={resetModals} />}
