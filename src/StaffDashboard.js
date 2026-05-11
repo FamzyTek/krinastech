@@ -9,13 +9,13 @@ const w = '#F5F0E8'
 
 export default function StaffDashboard({ currentUser, products, sales, page, setPage, cart, setCart, onRecordSale, onLogout }) {
   const [receipt, setReceipt] = useState(null)
-  const [mobile, setMobile] = useState(window.innerWidth < 768)
+
   const today = new Date().toISOString().split('T')[0]
   const firstName = currentUser.split(' ')[0]
   const mySales = sales.filter(s => s.staff === firstName)
 
   useEffect(() => {
-    const handler = () => setMobile(window.innerWidth < 768)
+    const handler = () => {}
     window.addEventListener('resize', handler)
     return () => window.removeEventListener('resize', handler)
   }, [])
