@@ -60,8 +60,7 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
         <div style={{ display:'flex', gap:2, padding:'0 18px', background:k3, borderBottom:'1px solid #222', flexShrink:0, position:'sticky', top:52, zIndex:100 }}>
           {nav.map(n => (
             <button key={n.id} onClick={() => { setPage(n.id); resetModals() }}
-              style={{ padding:'12px 20px', fontSize:13, border:'none', background:'transparent', cursor:'pointer', color: page === n.id ? gold : w, fontWeight: page === n.id ? 700 : 400, borderBottom: page === n.id ? '2px solid #C9A84C' : '2px solid transparent', whiteSpace:'nowrap' }}>
-              {n.label}
+              
             </button>
           ))}
         </div>
@@ -87,7 +86,7 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
           {nav.map(n => (
             <button key={n.id} onClick={() => { setPage(n.id); resetModals() }}
               style={{ flex:1, padding:'8px 4px 10px', background:'transparent', border:'none', cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:3 }}>
-              <span style={{ fontSize:11, color: page === n.id ? gold : mu, fontWeight: page === n.id ? 700 : 400 }}>{n.label}</span>
+              <span style={{ fontSize:11, color: page === n.id ? gold : mu, fontWeight: page === n.id ? 700 : 400 }}>{n.icon} {n.label}</span>
               {page === n.id && <div style={{ width:4, height:4, borderRadius:'50%', background:gold }}></div>}
             </button>
           ))}
