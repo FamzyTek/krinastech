@@ -93,7 +93,7 @@ export default function AdminDashboard({ currentUser, products, sales, staffList
 function OverviewPage({ products, sales, totalStock, totalRev, totalProfit, lowCount, todayRev, todaySales, onEditSale, onDeleteSale, mobile }) {
   return (
     <div>
-      <div style={{ display:'flex', overflowX:'auto', gap:12, marginBottom:20, paddingBottom:4, WebkitOverflowScrolling:'touch' }}>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:10, marginBottom:20 }}>
         {[['Stock Value', fmt(totalStock), products.length+' products', gold],
           ['Revenue', fmt(totalRev), 'All time', w],
           ['Net Profit', fmt(totalProfit), 'All time', '#6DBF6D'],
@@ -344,7 +344,7 @@ function ProfitPage({ sales, mobile }) {
   })
   return(
     <div>
-      <div style={{ display:'flex', overflowX:'auto', gap:12, marginBottom:20, paddingBottom:4, WebkitOverflowScrolling:'touch' }}>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:10, marginBottom:20 }}>
         {[['Total Revenue',fmt(totalRev),'All time',w],['Total Cost',fmt(totalRev-totalProfit),'Cost of goods',w],['Net Profit',fmt(totalProfit),'All time','#6DBF6D'],['Profit Margin',margin+'%','Overall',gold]].map(([label,val,sub,color])=>(
           <div key={label} style={{ background:k2, border:'1px solid #333', borderRadius:12, padding:16, minWidth:150, flexShrink:0 }}>
             <div style={{ fontSize:12, color:mu, letterSpacing:1, textTransform:'uppercase', marginBottom:8 }}>{label}</div>
