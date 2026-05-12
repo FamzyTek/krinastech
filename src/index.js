@@ -4,15 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-// Clear old service workers and cache on every load
+// Force unregister ALL service workers and clear ALL caches
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then(registrations => {
-    registrations.forEach(registration => registration.unregister())
+    registrations.forEach(registration => {
+      registration.unregister()
+      console.log('SW unregistered')
+    })
   })
 }
 if ('caches' in window) {
   caches.keys().then(names => {
-    names.forEach(name => caches.delete(name))
+    names.forEach(name => {
+      caches.delete(name)
+      console.log('Cache cleared:', name)
+    })
   })
 }
 
