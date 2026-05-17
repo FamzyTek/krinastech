@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 const fmt = n => '\u20A6' + Number(Math.round(n)).toLocaleString()
 const gold = '#C9A84C'
@@ -9,7 +9,7 @@ const w = '#F5F0E8'
 
 export default function StaffDashboard({ currentUser, products, sales, page, setPage, cart, setCart, onRecordSale, onLogout }) {
   const [receipt, setReceipt] = useState(null)
-  const [mobile, setMobile] = useState(window.innerWidth < 768)
+  // mobile removed
   const [discount, setDiscount] = useState('')
   const [paymentMethod, setPaymentMethod] = useState('Cash')
   const today = new Date().toISOString().split('T')[0]

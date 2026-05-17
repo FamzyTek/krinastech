@@ -160,7 +160,6 @@ function StockPage({ products, onAdd, onUpdate, onDelete }) {
   const gold = '#C9A84C'
   const k2 = '#141414'
   const k3 = '#1C1C1C'
-  const mu = '#8A8070'
   const w = '#F5F0E8'
   const fmt = n => '\u20A6' + Number(Math.round(n)).toLocaleString()
 
@@ -219,7 +218,6 @@ function SalesPage({ sales, onDelete, onUpdate }) {
   const gold = '#C9A84C'
   const k2 = '#141414'
   const k3 = '#1C1C1C'
-  const mu = '#8A8070'
   const w = '#F5F0E8'
   const fmt = n => '\u20A6' + Number(Math.round(n)).toLocaleString()
 
@@ -268,7 +266,6 @@ function StaffPage({ staffList, onAdd, onRemove }) {
   const gold = '#C9A84C'
   const k2 = '#141414'
   const k3 = '#1C1C1C'
-  const mu = '#8A8070'
   const w = '#F5F0E8'
 
   function initials(n) { const p=n.split(' '); return(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase() }
