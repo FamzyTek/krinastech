@@ -17,7 +17,7 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
   const mySales = sales.filter(s => s.staff === firstName)
 
   useEffect(() => {
-    const handler = () => setMobile(window.innerWidth < 768)
+    const handler = () => {}
     window.addEventListener('resize', handler)
     return () => window.removeEventListener('resize', handler)
   }, [])
