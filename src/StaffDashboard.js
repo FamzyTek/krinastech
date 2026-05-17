@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 
 const fmt = n => '\u20A6' + Number(Math.round(n)).toLocaleString()
 const gold = '#C9A84C'
@@ -311,20 +311,22 @@ export default function StaffDashboard({ currentUser, products, sales, page, set
 
       </div>
 
-      {/* BOTTOM NAV */}
-      <div style={{ position:'fixed', bottom:0, left:0, right:0, background:k2, borderTop:'1px solid #2A2A2A', display:'flex', zIndex:100 }}>
-        {nav.map(n => (
-          <button key={n.id} onClick={() => setPage(n.id)}
-            style={{ flex:1, padding:'8px 4px 10px', background:'transparent', border:'none', cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:3, position:'relative' }}>
-            <span style={{ fontSize:22 }}>{n.icon}</span>
-            {n.id==='pos' && cart.length>0 && (
-              <div style={{ position:'absolute', top:4, right:'25%', width:16, height:16, borderRadius:'50%', background:'#E07070', color:'#fff', fontSize:10, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center' }}>{cartCount}</div>
-            )}
-            <span style={{ fontSize:10, color:page===n.id?gold:mu, fontWeight:page===n.id?700:400 }}>{n.label}</span>
-            {page===n.id && <div style={{ width:4, height:4, borderRadius:'50%', background:gold }}></div>}
-          </button>
-        ))}
-      </div>
+      {/* BOTTOM NAV — mobile only */}
+      {mobile && (
+        <div style={{ position:'fixed', bottom:0, left:0, right:0, background:k2, borderTop:'1px solid #2A2A2A', display:'flex', zIndex:100 }}>
+          {nav.map(n => (
+            <button key={n.id} onClick={() => setPage(n.id)}
+              style={{ flex:1, padding:'8px 4px 10px', background:'transparent', border:'none', cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:3, position:'relative' }}>
+              <span style={{ fontSize:22 }}>{n.icon}</span>
+              {n.id==='pos' && cart.length>0 && (
+                <div style={{ position:'absolute', top:4, right:'25%', width:16, height:16, borderRadius:'50%', background:'#E07070', color:'#fff', fontSize:10, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center' }}>{cartCount}</div>
+              )}
+              <span style={{ fontSize:10, color:page===n.id?gold:mu, fontWeight:page===n.id?700:400 }}>{n.label}</span>
+              {page===n.id && <div style={{ width:4, height:4, borderRadius:'50%', background:gold }}></div>}
+            </button>
+          ))}
+        </div>
+      )}
 
     </div>
   )
