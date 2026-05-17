@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 
 const fmt = n => '\u20A6' + Number(Math.round(n)).toLocaleString()
 const gold = '#C9A84C'
@@ -227,11 +227,13 @@ function AddProductForm({ onAdd, products, onEdit, onDelete, onRestock, mobile }
   const [sell,setSell]=useState('')
   const [qty,setQty]=useState('')
   const inp = { width:'100%', padding:'10px 12px', background:k3, border:'1px solid #444', borderRadius:8, color:w, fontSize:14, outline:'none' }
+
   function handleAdd(){
     if(!name||!cat||!cost||!sell||!qty)return alert('Fill all fields')
     onAdd({name,category:cat,cost:parseFloat(cost),sell:parseFloat(sell),qty:parseInt(qty)})
     setName('');setCat('');setCost('');setSell('');setQty('')
   }
+
   return(
     <div>
       <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>Add product</div>
@@ -243,9 +245,10 @@ function AddProductForm({ onAdd, products, onEdit, onDelete, onRestock, mobile }
         </div>
         <button onClick={handleAdd} style={{ padding:'10px 24px', background:gold, color:'#0A0A0A', border:'none', borderRadius:8, fontSize:14, fontWeight:700, cursor:'pointer' }}>+ Add Product</button>
       </div>
+
       <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>All inventory</div>
       <div style={{ background:k2, border:'1px solid #333', borderRadius:12, overflowX:'auto', WebkitOverflowScrolling:'touch' }}>
-        <table style={{ width:'100%', borderCollapse:'collapse', fontSize:14, minWidth:600 }}>
+        <table style={{ width:'100%', borderCollapse:'collapse', fontSize:14, minWidth:650 }}>
           <thead><tr style={{ background:k3 }}>
             {['Product','Category','Cost','Sell Price','Qty','Status','Actions'].map(h=><th key={h} style={{ textAlign:'left', padding:'12px 16px', fontSize:12, color:gold, borderBottom:'1px solid #333', whiteSpace:'nowrap', fontWeight:700 }}>{h}</th>)}
           </tr></thead>
@@ -253,7 +256,7 @@ function AddProductForm({ onAdd, products, onEdit, onDelete, onRestock, mobile }
             {products.map(p=>(
               <tr key={p.id} style={{ borderBottom:'1px solid #222' }}>
                 <td style={{ padding:'12px 16px', color:w, fontWeight:700, whiteSpace:'nowrap' }}>{p.name}</td>
-                <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', fontWeight:600 }}>{p.category}</td>
+                <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', fontWeight:600 }}>{p.category||'General'}</td>
                 <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', fontWeight:600 }}>{fmt(p.cost)}</td>
                 <td style={{ padding:'12px 16px', color:gold, whiteSpace:'nowrap', fontWeight:700 }}>{fmt(p.sell)}</td>
                 <td style={{ padding:'12px 16px', color:w, fontWeight:700, whiteSpace:'nowrap' }}>{p.qty}</td>
@@ -302,29 +305,40 @@ function SalesPage({ sales, onEdit, onDelete, mobile }) {
           </tbody>
         </table>
       </div>
+
       <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>All transactions</div>
       <div style={{ background:k2, border:'1px solid #333', borderRadius:12, overflowX:'auto', WebkitOverflowScrolling:'touch' }}>
-        <table style={{ width:'100%', borderCollapse:'collapse', fontSize:14, minWidth:580 }}>
+        <table style={{ width:'100%', borderCollapse:'collapse', fontSize:14, minWidth:750 }}>
           <thead><tr style={{ background:k3 }}>
-            {['Items','Staff','Total','Profit','Date','Actions'].map(h=><th key={h} style={{ textAlign:'left', padding:'12px 16px', fontSize:12, color:gold, borderBottom:'1px solid #333', whiteSpace:'nowrap', fontWeight:700 }}>{h}</th>)}
+            {['Items','Staff','Price Tag','Discount','Paid Price','Payment','Profit','Date','Actions'].map(h=><th key={h} style={{ textAlign:'left', padding:'12px 16px', fontSize:12, color:gold, borderBottom:'1px solid #333', whiteSpace:'nowrap', fontWeight:700 }}>{h}</th>)}
           </tr></thead>
           <tbody>
-            {sales.map(s=>{
-              const items=s.items.map(i=>i.name+(i.qty>1?' x'+i.qty:'')).join(', ')
-              return(
-                <tr key={s.id} style={{ borderBottom:'1px solid #222' }}>
-                  <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', maxWidth:200, overflow:'hidden', textOverflow:'ellipsis', fontWeight:600 }} title={items}>{items}</td>
-                  <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', fontWeight:600 }}>{s.staff}</td>
-                  <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', fontWeight:600 }}>{fmt(s.total)}</td>
-                  <td style={{ padding:'12px 16px', color:'#6DBF6D', fontWeight:700, whiteSpace:'nowrap' }}>{fmt(s.profit)}</td>
-                  <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', fontWeight:600 }}>{s.date}</td>
-                  <td style={{ padding:'12px 16px', whiteSpace:'nowrap' }}>
-                    <button onClick={()=>onEdit(s)} style={{ marginRight:6, padding:'6px 12px', background:'transparent', border:'1px solid #2A3A1A', borderRadius:6, color:'#D4A040', fontSize:12, cursor:'pointer', fontWeight:600 }}>Edit</button>
-                    <button onClick={()=>onDelete(s)} style={{ padding:'6px 12px', background:'transparent', border:'1px solid #4A1A1A', borderRadius:6, color:'#E07070', fontSize:12, cursor:'pointer', fontWeight:600 }}>Del</button>
-                  </td>
-                </tr>
-              )
-            })}
+            {sales.length===0
+              ?<tr><td colSpan={9} style={{ padding:'2rem', textAlign:'center', color:mu }}>No sales yet</td></tr>
+              :sales.map(s=>{
+                const items=s.items.map(i=>i.name+(i.qty>1?' x'+i.qty:'')).join(', ')
+                return(
+                  <tr key={s.id} style={{ borderBottom:'1px solid #222' }}>
+                    <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', maxWidth:200, overflow:'hidden', textOverflow:'ellipsis', fontWeight:600 }} title={items}>{items}</td>
+                    <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', fontWeight:600 }}>{s.staff}</td>
+                    <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', fontWeight:600 }}>{fmt(s.price_tag||s.total)}</td>
+                    <td style={{ padding:'12px 16px', color:'#E07070', whiteSpace:'nowrap', fontWeight:600 }}>{fmt(s.discount||0)}</td>
+                    <td style={{ padding:'12px 16px', color:gold, fontWeight:700, whiteSpace:'nowrap' }}>{fmt(s.paid_price||s.total)}</td>
+                    <td style={{ padding:'12px 16px', whiteSpace:'nowrap' }}>
+                      <span style={{ background: s.payment_method==='Cash'?'#0A2A0A':s.payment_method==='Transfer'?'#0A1A2A':'#1A1A0A', color: s.payment_method==='Cash'?'#6DBF6D':s.payment_method==='Transfer'?'#6DB3DF':'#D4A040', padding:'4px 10px', borderRadius:20, fontSize:12, fontWeight:700 }}>
+                        {s.payment_method||'Cash'}
+                      </span>
+                    </td>
+                    <td style={{ padding:'12px 16px', color:'#6DBF6D', fontWeight:700, whiteSpace:'nowrap' }}>{fmt(s.profit)}</td>
+                    <td style={{ padding:'12px 16px', color:w, whiteSpace:'nowrap', fontWeight:600 }}>{s.date}</td>
+                    <td style={{ padding:'12px 16px', whiteSpace:'nowrap' }}>
+                      <button onClick={()=>onEdit(s)} style={{ marginRight:6, padding:'6px 12px', background:'transparent', border:'1px solid #2A3A1A', borderRadius:6, color:'#D4A040', fontSize:12, cursor:'pointer', fontWeight:600 }}>Edit</button>
+                      <button onClick={()=>onDelete(s)} style={{ padding:'6px 12px', background:'transparent', border:'1px solid #4A1A1A', borderRadius:6, color:'#E07070', fontSize:12, cursor:'pointer', fontWeight:600 }}>Del</button>
+                    </td>
+                  </tr>
+                )
+              })
+            }
           </tbody>
         </table>
       </div>
@@ -383,28 +397,38 @@ function StaffPage({ staffList, onAdd, onRemove, mobile }) {
   const [name,setName]=useState('')
   const [username,setUsername]=useState('')
   const [password,setPassword]=useState('')
+  const [role,setRole]=useState('staff')
   function initials(n){const p=n.split(' ');return(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase()}
   const inp = { width:'100%', padding:'10px 12px', background:k3, border:'1px solid #444', borderRadius:8, color:w, fontSize:14, outline:'none' }
   return(
     <div>
-      <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>Add staff account</div>
+      <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>Add account</div>
       <div style={{ background:k2, border:'1px solid #333', borderRadius:12, padding:16, marginBottom:16 }}>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(140px,1fr))', gap:10, marginBottom:12 }}>
           {[['Full name',name,setName,'text'],['Username',username,setUsername,'text'],['Password',password,setPassword,'password']].map(([ph,val,setter,type])=>(
             <input key={ph} type={type} placeholder={ph} value={val} onChange={e=>setter(e.target.value)} style={inp} />
           ))}
+          <select value={role} onChange={e=>setRole(e.target.value)} style={{ ...inp }}>
+            <option value="staff">Staff</option>
+            <option value="management">Management</option>
+          </select>
         </div>
-        <button onClick={()=>{if(!name||!username||!password)return alert('Fill all fields');onAdd({name,username,password,role:'staff',active:true});setName('');setUsername('');setPassword('')}} style={{ padding:'10px 24px', background:gold, color:'#0A0A0A', border:'none', borderRadius:8, fontSize:14, fontWeight:700, cursor:'pointer' }}>+ Add Staff</button>
+        <button onClick={()=>{if(!name||!username||!password)return alert('Fill all fields');onAdd({name,username,password,role,active:true});setName('');setUsername('');setPassword('');setRole('staff')}} style={{ padding:'10px 24px', background:gold, color:'#0A0A0A', border:'none', borderRadius:8, fontSize:14, fontWeight:700, cursor:'pointer' }}>+ Add Account</button>
       </div>
-      <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>Staff accounts</div>
+
+      <div style={{ fontSize:13, fontWeight:700, color:gold, letterSpacing:2, textTransform:'uppercase', marginBottom:12 }}>All accounts</div>
       <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
-        {staffList.filter(s=>s.role==='staff').map(s=>(
+        {staffList.filter(s=>s.role!=='admin').map(s=>(
           <div key={s.id} style={{ background:k2, border:'1px solid #333', borderRadius:12, padding:16, display:'flex', alignItems:'center', gap:14 }}>
             <div style={{ width:46, height:46, borderRadius:'50%', background:k3, border:'2px solid #C9A84C', display:'flex', alignItems:'center', justifyContent:'center', fontSize:16, fontWeight:700, color:gold, flexShrink:0 }}>{initials(s.name)}</div>
             <div style={{ flex:1 }}>
               <div style={{ fontSize:15, fontWeight:700, color:w }}>{s.name}</div>
-              <div style={{ fontSize:12, color:mu, textTransform:'uppercase', letterSpacing:1, marginTop:3 }}>@{s.username}</div>
-              <div style={{ fontSize:12, color:'#6DBF6D', marginTop:4, fontWeight:600 }}>Active</div>
+              <div style={{ fontSize:12, color:mu, marginTop:3 }}>@{s.username}</div>
+              <div style={{ fontSize:11, marginTop:4 }}>
+                <span style={{ background: s.role==='management'?'#1A0A2A':'#0A1A0A', color: s.role==='management'?'#A07CC5':'#6DBF6D', padding:'2px 8px', borderRadius:20, fontWeight:600 }}>
+                  {s.role==='management'?'Management':'Staff'}
+                </span>
+              </div>
             </div>
             <button onClick={()=>onRemove(s.id)} style={{ padding:'8px 16px', background:'transparent', border:'1px solid #4A1A1A', borderRadius:8, color:'#E07070', fontSize:13, cursor:'pointer', fontWeight:600 }}>Remove</button>
           </div>
