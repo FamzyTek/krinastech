@@ -9,7 +9,7 @@ const w = '#F5F0E8'
 
 export default function StaffDashboard({ currentUser, products, sales, page, setPage, cart, setCart, onRecordSale, onLogout }) {
   const [receipt, setReceipt] = useState(null)
-  // mobile removed
+  const mobile = window.innerWidth < 768
   const [discount, setDiscount] = useState('')
   const [paymentMethod, setPaymentMethod] = useState('Cash')
   const today = new Date().toISOString().split('T')[0]
