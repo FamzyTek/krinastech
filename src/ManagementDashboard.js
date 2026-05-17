@@ -313,5 +313,3 @@ function StaffPage({ staffList, onAdd, onRemove }) {
     </div>
   )
 }
-
-import { useState } from 'react'
